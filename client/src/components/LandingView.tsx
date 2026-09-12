@@ -14,23 +14,24 @@ interface LandingViewProps {
   onOpenSubmit: () => void;
 }
 
-// Animated progress bar row
-const ProgressRow: React.FC<{ label: string; pct: number; delay: number }> = ({
+// Reusable progress row animated with anime.js
+const ProgressRow: React.FC<{ label: string; pct: number; delay?: number }> = ({
   label,
   pct,
-  delay,
+  delay = 0,
 }) => {
-  const barRef = useProgressBar(pct, delay);
+  const barRef = useProgressBar(pct, { duration: 1100, delay });
+
   return (
     <div>
-      <div className="flex justify-between text-[#a8a29b] mb-1 text-[11px] font-mono">
-        <span>{label}</span>
-        <span className="text-[#d9a15c]">{pct}%</span>
+      <div className="flex justify-between text-xs text-[#ede3d0] mb-1 font-mono">
+        <span className="text-[#a8a29b]">{label}</span>
+        <span className="font-semibold">{pct}%</span>
       </div>
-      <div className="w-full bg-[#141312] h-1.5 rounded overflow-hidden">
+      <div className="w-full bg-[#0f0e0d] h-1.5 rounded overflow-hidden">
         <div
           ref={barRef}
-          className="bg-gradient-to-r from-[#d9a15c] to-[#f7bb74] h-full rounded"
+          className="bg-gradient-to-r from-[#d9a15c] to-[#f5c78e] h-full rounded"
           style={{ width: '0%' }}
         />
       </div>
@@ -45,6 +46,7 @@ export const LandingView: React.FC<LandingViewProps> = ({
   const heroLeftRef = useRef<HTMLDivElement>(null);
   const heroRightRef = useRef<HTMLDivElement>(null);
   const ladyRef = useRef<HTMLDivElement>(null);
+  const figureRef = useRef<HTMLDivElement>(null);
   const pillarsRef = useStaggerFadeIn('.pillar-card', { delay: 90, translateY: 32 });
   const useCasesRef = useStaggerFadeIn('.use-case-card', { delay: 70 });
 
@@ -65,7 +67,7 @@ export const LandingView: React.FC<LandingViewProps> = ({
       });
     }
 
-    // Lady Justice dramatic entrance
+    // Lady Justice avatar dramatic entrance
     if (ladyRef.current) {
       anime({
         targets: ladyRef.current,
@@ -78,7 +80,7 @@ export const LandingView: React.FC<LandingViewProps> = ({
       });
     }
 
-    // Hero right card
+    // Hero right card composite
     if (heroRightRef.current) {
       anime({
         targets: heroRightRef.current,
@@ -123,6 +125,20 @@ export const LandingView: React.FC<LandingViewProps> = ({
     });
   }, []);
 
+  // Floating levitation for the full Indian Lady of Justice figure
+  useEffect(() => {
+    if (figureRef.current) {
+      anime({
+        targets: figureRef.current,
+        translateY: [-6, 6],
+        duration: 3400,
+        direction: 'alternate',
+        loop: true,
+        easing: 'easeInOutSine',
+      });
+    }
+  }, []);
+
   const pillars = [
     {
       system: '01',
@@ -140,33 +156,33 @@ export const LandingView: React.FC<LandingViewProps> = ({
     },
     {
       system: '03',
-      title: 'GST Cross-Check',
+      title: 'GST Cross-Checker',
       icon: <FileCheck className="w-5 h-5 text-[#d9a15c]" />,
-      desc: 'Direct GSTN API confirming supplier GSTR-1 filings, site volume requirements, and invoice uniqueness.',
-      tag: 'GSTR-2B Matching • Duplicate Hash',
+      desc: 'Automated NIC GSTR-2B API reconciliation flagging circular invoicing, shell entities, and mismatching volumes.',
+      tag: 'NIC / IRIS API • GSTR-2B & GSTR-1',
     },
     {
       system: '04',
-      title: 'Auto-Escalation',
+      title: 'Autonomous Escalation',
       icon: <Send className="w-5 h-5 text-[#d9a15c]" />,
-      desc: 'SLA timers bumping stagnant files: Local Staff → District → State → CM Dashboard, without human intervention.',
-      tag: 'Tamil Notice Engine • CM Review',
+      desc: 'Time-decaying state machine routing unresolved cases through Local Staff → District Collector → State Level → CM Dashboard.',
+      tag: 'Fixed SLA Clock • Zero Human Stalling',
     },
   ];
 
   const useCases = [
     {
-      label: 'Use Case A • Rural Development',
-      title: 'Kalaignarin Kanavu Illam / Housing',
-      desc: 'Tranches disbursed milestone by milestone. Officers accountable through mandatory geo-photo check-ins, eliminating ghost inspections.',
+      label: 'Kalaignar Kanavu Illam',
+      title: 'Rural Concrete Housing Scheme',
+      desc: '1,00,000 rural houses tracked across 37 districts. Photo AI verifies roof casting before final ₹2.4 Lakh DBT tranche is released.',
     },
     {
-      label: 'Use Case B • Highways & Municipal',
-      title: 'Urban Road Repair & Pothole Paving',
-      desc: 'Citizens crowdsource damaged asphalt coordinates. Contractors must submit post-work photos matching precise GPS polygon before sign-off.',
+      label: 'CM Grama Salai',
+      title: 'Village Connectivity & Roads',
+      desc: '10,000 km rural road network. Drone and mobile GPS tracking ensures bituminous layer thickness matches billing specifications.',
     },
     {
-      label: 'Use Case C • MAWS Department',
+      label: 'Smart Cities Mission',
       title: 'Tirupur Bus Stand Redevelopment',
       desc: '₹115.37 Cr multi-level terminal tracking. Automated cross-referencing between structural concrete pouring and declared GST cement invoices.',
     },
@@ -176,15 +192,15 @@ export const LandingView: React.FC<LandingViewProps> = ({
     <div className="space-y-20 pb-20">
 
       {/* ── Hero Section ─────────────────────────────────────── */}
-      <section className="min-h-[80vh] flex items-center pt-8">
+      <section className="min-h-[85vh] flex items-center pt-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
 
           {/* Left Column */}
           <div ref={heroLeftRef} className="lg:col-span-7 flex flex-col items-start">
             {/* Badge */}
-            <div className="hero-anim opacity-0 inline-flex items-center gap-2 px-3 py-1 text-xs border border-[rgba(237,227,208,0.15)] text-[#a8a29b] mb-6 bg-[#171512] rounded-full uppercase tracking-wider font-mono">
+            <div className="hero-anim opacity-0 inline-flex items-center gap-2 px-3.5 py-1 text-xs border border-[rgba(237,227,208,0.15)] text-[#a8a29b] mb-6 bg-[#171512] rounded-full uppercase tracking-wider font-mono">
               <span className="w-2 h-2 rounded-full bg-[#d9a15c] animate-ping" />
-              <span>Government of Tamil Nadu Prototype • 2026</span>
+              <span>Government of Tamil Nadu • Constitutional Compliance 2026</span>
             </div>
 
             {/* Lady Justice + Title row */}
@@ -198,15 +214,15 @@ export const LandingView: React.FC<LandingViewProps> = ({
                   id="lady-glow"
                   className="absolute -inset-4 rounded-full bg-[#d9a15c]/20 blur-xl pointer-events-none"
                 />
-                <div className="relative w-24 h-24 rounded-full border-2 border-[#d9a15c]/50 overflow-hidden shadow-2xl">
+                <div className="relative w-24 h-24 rounded-full border-2 border-[#d9a15c]/60 overflow-hidden shadow-2xl bg-[#171512]">
                   <img
-                    src="/lady-justice.webp"
-                    alt="Lady of Justice — Nidhi Kaan"
+                    src="/lady-justice-avatar.jpg"
+                    alt="Lady of Justice — Nidhi Kaan Logo"
                     className="w-full h-full object-cover"
-                    style={{ filter: 'sepia(15%) brightness(0.9) contrast(1.1)' }}
+                    style={{ filter: 'contrast(1.12) brightness(1.05)' }}
                   />
                   {/* Inner gold vignette */}
-                  <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-[#d9a15c]/30" />
+                  <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-[#d9a15c]/40" />
                 </div>
               </div>
 
@@ -247,51 +263,81 @@ export const LandingView: React.FC<LandingViewProps> = ({
             </div>
           </div>
 
-          {/* Right Column: Evidence Score Card */}
+          {/* Right Column: Lady Justice Statue + Evidence Score Card Composite */}
           <div
             ref={heroRightRef}
-            className="lg:col-span-5 flex justify-center items-center opacity-0"
+            className="lg:col-span-5 flex flex-col items-center justify-center opacity-0 relative"
           >
-            <div className="relative w-full max-w-md stitch-card p-6 border-[#d9a15c]/30"
-              style={{ boxShadow: '0 0 40px -8px rgba(217,161,92,0.2)' }}
+            {/* Ambient gold glow behind Lady of Justice */}
+            <div className="absolute -inset-8 rounded-full bg-gradient-to-tr from-[#d9a15c]/20 via-[#c48e4b]/10 to-transparent blur-3xl pointer-events-none" />
+
+            {/* Indian Lady of Justice Hero Figure */}
+            <div
+              ref={figureRef}
+              className="relative z-10 w-full max-w-[320px] flex justify-center mb-[-48px]"
+            >
+              <div className="relative rounded-2xl overflow-hidden border border-[#d9a15c]/35 shadow-2xl bg-gradient-to-b from-[#171512] via-[#121110] to-[#0f0e0d]">
+                <img
+                  src="/lady-justice.jpg"
+                  alt="Nyaya Devata — Indian Lady of Justice with Constitution of India"
+                  className="w-full max-h-[400px] object-cover object-top hover:scale-105 transition-transform duration-700"
+                  style={{ filter: 'contrast(1.12) brightness(1.05)' }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0f0e0d] via-transparent to-transparent opacity-85 pointer-events-none" />
+                {/* Floating caption badge */}
+                <div className="absolute top-3 right-3 px-2.5 py-1 rounded bg-[#0f0e0d]/90 border border-[#d9a15c]/40 text-[9px] font-mono text-[#d9a15c] backdrop-blur-sm">
+                  ⚖ CONSTITUTION OF INDIA
+                </div>
+              </div>
+            </div>
+
+            {/* Evidence Score Card Overlaid */}
+            <div
+              className="relative z-20 w-full max-w-md stitch-card p-6 border-[#d9a15c]/35 backdrop-blur-md bg-[#141312]/95"
+              style={{ boxShadow: '0 12px 40px -10px rgba(0,0,0,0.8), 0 0 30px -5px rgba(217,161,92,0.2)' }}
             >
               {/* Card Header */}
-              <div className="flex items-center justify-between border-b border-[rgba(237,227,208,0.1)] pb-4 mb-4">
+              <div className="flex items-center justify-between border-b border-[rgba(237,227,208,0.1)] pb-3 mb-3">
                 <div className="flex items-center gap-2">
                   <img
-                    src="/lady-justice.webp"
+                    src="/lady-justice-avatar.jpg"
                     alt="logo"
-                    className="w-7 h-7 rounded-full object-cover border border-[#d9a15c]/40"
-                    style={{ filter: 'sepia(20%) brightness(0.9)' }}
+                    className="w-7 h-7 rounded-full object-cover border border-[#d9a15c]/50"
                   />
-                  <span className="text-xs font-mono font-bold uppercase text-[#ede3d0]">
-                    TN-EVI-2026-8841
-                  </span>
+                  <div>
+                    <span className="text-xs font-mono font-bold uppercase text-[#ede3d0] block">
+                      TN-EVI-2026-8841
+                    </span>
+                    <span className="text-[9px] font-mono text-[#d9a15c]">
+                      CONSTITUTIONAL COMPLIANCE PASS
+                    </span>
+                  </div>
                 </div>
-                <span className="stitch-badge-green px-2.5 py-0.5 rounded text-[10px] font-mono font-bold">
+                <span className="stitch-badge-green px-2.5 py-0.5 rounded text-[10px] font-mono font-bold flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#78be78] animate-ping" />
                   VERIFIED
                 </span>
               </div>
 
               {/* Score */}
-              <div className="text-center py-4">
-                <div className="text-6xl font-mono font-bold text-[#ede3d0] tracking-tight">
+              <div className="text-center py-2">
+                <div className="text-5xl font-mono font-bold text-[#ede3d0] tracking-tight">
                   <span ref={scoreRef}>0</span>
-                  <span className="text-2xl text-[#d9a15c]">%</span>
+                  <span className="text-xl text-[#d9a15c]">%</span>
                 </div>
-                <div className="text-xs text-[#a8a29b] mt-1 font-mono uppercase tracking-wider">
+                <div className="text-[10px] text-[#a8a29b] mt-0.5 font-mono uppercase tracking-wider">
                   Composite Evidence Confidence Score
                 </div>
               </div>
 
               {/* Bars */}
-              <div className="space-y-3 mt-4 border-t border-[rgba(237,227,208,0.08)] pt-4">
-                <ProgressRow label="Location Consistency (EXIF)" pct={92} delay={700} />
-                <ProgressRow label="Image Integrity (ELA & pHash)" pct={85} delay={900} />
-                <ProgressRow label="Temporal & GST Match" pct={79} delay={1100} />
+              <div className="space-y-2.5 mt-3 border-t border-[rgba(237,227,208,0.08)] pt-3">
+                <ProgressRow label="Location Consistency (Live GPS EXIF)" pct={92} delay={700} />
+                <ProgressRow label="Image Forensics (ELA & pHash)" pct={85} delay={900} />
+                <ProgressRow label="GST Invoice Match (GSTR-2B)" pct={79} delay={1100} />
               </div>
 
-              <div className="mt-5 pt-3 border-t border-[rgba(237,227,208,0.08)] flex items-center justify-between text-[11px] text-[#a8a29b] font-mono">
+              <div className="mt-4 pt-2.5 border-t border-[rgba(237,227,208,0.08)] flex items-center justify-between text-[11px] text-[#a8a29b] font-mono">
                 <span>Pilot: Tiruppur Bus Stand</span>
                 <span className="text-[#78be78]">✓ GSTR-2B Sealed</span>
               </div>
@@ -339,10 +385,9 @@ export const LandingView: React.FC<LandingViewProps> = ({
       <section ref={useCasesRef} className="stitch-card p-8">
         <div className="border-b border-[rgba(237,227,208,0.1)] pb-4 mb-6 flex items-center gap-4">
           <img
-            src="/lady-justice.webp"
+            src="/lady-justice-avatar.jpg"
             alt="Nidhi Kaan"
             className="w-10 h-10 rounded-full object-cover border border-[#d9a15c]/40 flex-shrink-0"
-            style={{ filter: 'sepia(20%) brightness(0.9)' }}
           />
           <div>
             <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest">
@@ -372,26 +417,28 @@ export const LandingView: React.FC<LandingViewProps> = ({
       </section>
 
       {/* ── Justice Quote Banner ─────────────────────────────── */}
-      <section className="relative overflow-hidden rounded-lg border border-[#d9a15c]/20 bg-[#141312] p-10 text-center">
+      <section className="relative overflow-hidden rounded-lg border border-[#d9a15c]/25 bg-[#141312] p-10 text-center">
         {/* BG Lady Justice watermark */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.04]">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.06]">
           <img
-            src="/lady-justice.webp"
-            alt=""
-            className="w-80 h-80 object-cover rounded-full"
+            src="/lady-justice.jpg"
+            alt="Constitution of India Lady Justice"
+            className="w-96 h-96 object-contain"
           />
         </div>
         <div className="relative z-10">
-          <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest mb-4">
-            FOUNDING PRINCIPLE
+          <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest mb-4 flex items-center justify-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#d9a15c]" />
+            CONSTITUTIONAL FIDUCIARY PRINCIPLE
+            <span className="w-1.5 h-1.5 rounded-full bg-[#d9a15c]" />
           </div>
           <blockquote className="text-2xl sm:text-3xl font-editorial font-light text-[#ede3d0] italic leading-relaxed max-w-2xl mx-auto">
             "Justice is not blind to the flow of public funds.
             <br />
-            Nidhi Kaan makes every rupee accountable."
+            Under the Constitution of India, Nidhi Kaan makes every rupee accountable."
           </blockquote>
           <div className="mt-4 text-xs text-[#a8a29b] font-mono">
-            — AI-BASED ANTI-CORRUPTION SYSTEM • GOVERNMENT OF TAMIL NADU • 2026
+            — AI-BASED ANTI-CORRUPTION &amp; COMPLIANCE SYSTEM • GOVERNMENT OF TAMIL NADU • 2026
           </div>
         </div>
       </section>

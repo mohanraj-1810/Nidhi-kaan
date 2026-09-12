@@ -86,7 +86,7 @@ export const CaseInspectorView: React.FC<CaseInspectorViewProps> = ({
         </div>
         <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded border border-[#d9a15c]/25 bg-[#171512]">
           <img
-            src="/lady-justice.webp"
+            src="/lady-justice-avatar.jpg"
             alt="Lady Justice Seal"
             className="w-8 h-8 rounded-full object-cover border border-[#d9a15c]/50"
           />

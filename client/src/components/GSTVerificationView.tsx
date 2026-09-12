@@ -82,16 +82,30 @@ export const GSTVerificationView: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-fadeIn">
       {/* Header */}
-      <div className="border-b border-[rgba(237,227,208,0.1)] pb-5">
-        <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest mb-1">
-          FINANCIAL FRAUD GATEWAY • SYSTEM 3
+      <div className="border-b border-[rgba(237,227,208,0.1)] pb-5 flex items-start justify-between">
+        <div>
+          <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest mb-1 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#d9a15c] animate-ping" />
+            FINANCIAL FRAUD GATEWAY • SYSTEM 3
+          </div>
+          <h1 className="text-3xl font-editorial font-light text-[#ede3d0]">
+            GSTN Cross-Reconciliation Portal
+          </h1>
+          <p className="text-xs text-[#a8a29b] mt-1 max-w-2xl">
+            Simulates instant IRIS/NIC GSTR-2B invoice clearance. Detects shell company invoice churn, fake ITC claims, and mismatches between physical milestone completion and declared GST filings.
+          </p>
         </div>
-        <h1 className="text-3xl font-editorial font-light text-[#ede3d0]">
-          GSTN Cross-Reconciliation Portal
-        </h1>
-        <p className="text-xs text-[#a8a29b] mt-1">
-          Cross-checks supplier GSTR-1 declarations against contractor GSTR-2B filing records. Invoices containing 'FAKE' trigger immediate freeze alerts.
-        </p>
+        <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded border border-[#d9a15c]/25 bg-[#171512]">
+          <img
+            src="/lady-justice-avatar.jpg"
+            alt="Lady Justice Seal"
+            className="w-8 h-8 rounded-full object-cover border border-[#d9a15c]/50"
+          />
+          <div className="text-[10px] font-mono text-[#d9a15c] leading-tight">
+            <div className="font-semibold tracking-wider">TAX RECON</div>
+            <div className="text-[#a8a29b] text-[9px]">GSTR-2B AUDIT</div>
+          </div>
+        </div>
       </div>
 
       {/* Lookup Form */}

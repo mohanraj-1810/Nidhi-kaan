@@ -88,10 +88,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="absolute inset-0 rounded-full bg-[#d9a15c]/15 border border-[#d9a15c]/30 group-hover:bg-[#d9a15c]/25 transition-colors" />
             <img
               ref={logoRef}
-              src="/lady-justice.webp"
-              alt="Lady Justice — Nidhi Kaan Logo"
+              src="/lady-justice-avatar.jpg"
+              alt="Lady of Justice — Nidhi Kaan Logo"
               className="w-11 h-11 object-cover rounded-full opacity-0 relative z-10"
-              style={{ filter: 'sepia(20%) brightness(0.92) contrast(1.1)' }}
+              style={{ filter: 'contrast(1.15) brightness(1.05)' }}
             />
             {/* Gold ring pulse */}
             <div className="absolute inset-0 rounded-full border border-[#d9a15c]/40 animate-ping opacity-30 pointer-events-none" />

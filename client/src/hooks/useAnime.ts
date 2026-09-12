@@ -49,19 +49,24 @@ export function useCountUp(target: number, duration = 1400) {
 }
 
 /** Animate a progress bar width */
-export function useProgressBar(pct: number, delay = 0) {
+export function useProgressBar(
+  pct: number,
+  options?: number | { duration?: number; delay?: number }
+) {
   const ref = useRef<HTMLDivElement>(null);
+  const delay = typeof options === 'number' ? options : options?.delay ?? 0;
+  const duration = typeof options === 'object' && options?.duration ? options.duration : 1200;
 
   useEffect(() => {
     if (!ref.current) return;
     anime({
       targets: ref.current,
       width: [`0%`, `${pct}%`],
-      duration: 1200,
+      duration,
       delay,
       easing: 'easeOutExpo',
     });
-  }, [pct, delay]);
+  }, [pct, delay, duration]);
 
   return ref;
 }

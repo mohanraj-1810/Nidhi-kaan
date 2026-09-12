@@ -174,10 +174,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div>
           <div className="header-anim opacity-0 flex items-center gap-3 mb-1">
             <img
-              src="/lady-justice.webp"
-              alt="Nidhi Kaan"
-              className="w-8 h-8 rounded-full object-cover border border-[#d9a15c]/40"
-              style={{ filter: 'sepia(20%) brightness(0.9)' }}
+              src="/lady-justice-avatar.jpg"
+              alt="Lady of Justice Seal"
+              className="w-8 h-8 rounded-full object-cover border border-[#d9a15c]/50"
             />
             <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest">
               TAMIL NADU STATE COMPLIANCE MONITOR
