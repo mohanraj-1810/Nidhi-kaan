@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import anime from 'animejs';
 import { Send, MapPin, Building, ShieldCheck, AlertCircle } from 'lucide-react';
 import { CaseCreatePayload, ProjectType } from '../types';
 
@@ -20,6 +21,34 @@ export const NewCaseModal: React.FC<NewCaseModalProps> = ({
   const [longitude, setLongitude] = useState(77.3411);
   const [invoiceNumber, setInvoiceNumber] = useState('INV-2026-TN-TP-08842');
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const statusRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      anime({
+        targets: containerRef.current.children,
+        opacity: [0, 1],
+        translateY: [20, 0],
+        delay: anime.stagger(80),
+        duration: 550,
+        easing: 'easeOutQuad',
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (statusRef.current && statusMsg) {
+      anime({
+        targets: statusRef.current,
+        scale: [0.92, 1],
+        opacity: [0, 1],
+        duration: 400,
+        easing: 'easeOutElastic(1, .6)',
+      });
+    }
+  }, [statusMsg]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,18 +90,32 @@ export const NewCaseModal: React.FC<NewCaseModalProps> = ({
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6 animate-fadeIn">
+    <div ref={containerRef} className="max-w-3xl mx-auto space-y-6">
       {/* Header */}
-      <div className="border-b border-[rgba(237,227,208,0.1)] pb-5">
-        <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest mb-1">
-          CASE INTAKE &amp; AI VERIFICATION
+      <div className="border-b border-[rgba(237,227,208,0.1)] pb-5 flex items-start justify-between">
+        <div>
+          <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest mb-1 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#d9a15c] animate-ping" />
+            CASE INTAKE &amp; AI VERIFICATION
+          </div>
+          <h1 className="text-3xl font-editorial font-light text-[#ede3d0]">
+            Register Milestone Submission
+          </h1>
+          <p className="text-xs text-[#a8a29b] mt-1">
+            Submits field evidence to the backend API (`/api/v1/cases/submit`). Runs System 1 (Geo), System 2 (Stage), and System 3 (GST) synchronously.
+          </p>
         </div>
-        <h1 className="text-3xl font-editorial font-light text-[#ede3d0]">
-          Register Milestone Submission
-        </h1>
-        <p className="text-xs text-[#a8a29b] mt-1">
-          Submits field evidence to the backend API (`/api/v1/cases/submit`). Runs System 1 (Geo), System 2 (Stage), and System 3 (GST) synchronously.
-        </p>
+        <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded border border-[#d9a15c]/25 bg-[#171512]">
+          <img
+            src="/lady-justice.webp"
+            alt="Lady Justice Seal"
+            className="w-8 h-8 rounded-full object-cover border border-[#d9a15c]/50"
+          />
+          <div className="text-[10px] font-mono text-[#d9a15c] leading-tight">
+            <div className="font-semibold tracking-wider">LEGAL PORTAL</div>
+            <div className="text-[#a8a29b] text-[9px]">JUSTICE ACCORD</div>
+          </div>
+        </div>
       </div>
 
       {/* Preset Quick-Buttons */}

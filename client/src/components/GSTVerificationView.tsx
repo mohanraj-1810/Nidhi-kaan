@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import anime from 'animejs';
 import {
   FileSearch,
   CheckCircle,
@@ -17,6 +18,46 @@ export const GSTVerificationView: React.FC = () => {
   const [result, setResult] = useState<VerifyGSTResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
+
+  // Entrance animation
+  useEffect(() => {
+    if (headerRef.current) {
+      anime({
+        targets: headerRef.current.querySelectorAll('.gst-anim'),
+        opacity: [0, 1],
+        translateY: [20, 0],
+        delay: anime.stagger(80),
+        duration: 600,
+        easing: 'easeOutExpo',
+      });
+    }
+    if (formRef.current) {
+      anime({
+        targets: formRef.current,
+        opacity: [0, 1],
+        translateY: [24, 0],
+        duration: 700,
+        delay: 200,
+        easing: 'easeOutExpo',
+      });
+    }
+  }, []);
+
+  // Animate result card when it appears
+  useEffect(() => {
+    if (result && resultRef.current) {
+      anime({
+        targets: resultRef.current,
+        opacity: [0, 1],
+        scale: [0.88, 1],
+        duration: 700,
+        easing: 'easeOutElastic(1, .6)',
+      });
+    }
+  }, [result]);
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();

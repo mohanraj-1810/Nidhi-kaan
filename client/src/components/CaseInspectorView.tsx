@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import anime from 'animejs';
 import {
   ShieldAlert,
   FastForward,
@@ -34,20 +35,66 @@ export const CaseInspectorView: React.FC<CaseInspectorViewProps> = ({
 }) => {
   const [rejectReason, setRejectReason] = useState('');
   const [showRejectInput, setShowRejectInput] = useState(false);
+  const listRef = useRef<HTMLDivElement>(null);
+  const detailRef = useRef<HTMLDivElement>(null);
+
+  // Stagger animate case cards when cases list loads or changes
+  useEffect(() => {
+    if (listRef.current) {
+      const cards = listRef.current.querySelectorAll('.case-card-item');
+      if (cards.length > 0) {
+        anime({
+          targets: cards,
+          opacity: [0, 1],
+          translateX: [-20, 0],
+          delay: anime.stagger(50, { start: 100 }),
+          duration: 450,
+          easing: 'easeOutQuad',
+        });
+      }
+    }
+  }, [cases.length]);
+
+  // Animate detail pane when selected case changes
+  useEffect(() => {
+    if (detailRef.current && selectedCase) {
+      anime({
+        targets: detailRef.current,
+        opacity: [0.3, 1],
+        translateY: [12, 0],
+        duration: 350,
+        easing: 'easeOutQuad',
+      });
+    }
+  }, [selectedCase?.id]);
 
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Header */}
-      <div className="border-b border-[rgba(237,227,208,0.1)] pb-5">
-        <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest mb-1">
-          CASE FORENSIC WORKSPACE
+      <div className="border-b border-[rgba(237,227,208,0.1)] pb-5 flex items-start justify-between">
+        <div>
+          <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest mb-1 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#d9a15c] animate-ping" />
+            CASE FORENSIC WORKSPACE
+          </div>
+          <h1 className="text-3xl font-editorial font-light text-[#ede3d0]">
+            Two-Panel Case &amp; Evidence Inspector
+          </h1>
+          <p className="text-xs text-[#a8a29b] mt-1">
+            Review evidence fusion scores, trigger real-time GST verification against the backend, or fast-forward the escalation hierarchy.
+          </p>
         </div>
-        <h1 className="text-3xl font-editorial font-light text-[#ede3d0]">
-          Two-Panel Case &amp; Evidence Inspector
-        </h1>
-        <p className="text-xs text-[#a8a29b] mt-1">
-          Review evidence fusion scores, trigger real-time GST verification against the backend, or fast-forward the escalation hierarchy.
-        </p>
+        <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded border border-[#d9a15c]/25 bg-[#171512]">
+          <img
+            src="/lady-justice.webp"
+            alt="Lady Justice Seal"
+            className="w-8 h-8 rounded-full object-cover border border-[#d9a15c]/50"
+          />
+          <div className="text-[10px] font-mono text-[#d9a15c] leading-tight">
+            <div className="font-semibold tracking-wider">JUSTICE SEAL</div>
+            <div className="text-[#a8a29b] text-[9px]">EVIDENCE VERIFIED</div>
+          </div>
+        </div>
       </div>
 
       {/* Two-Panel Layout */}
@@ -70,7 +117,7 @@ export const CaseInspectorView: React.FC<CaseInspectorViewProps> = ({
               No cases recorded yet. Submit a new case to start verification.
             </div>
           ) : (
-            <div className="space-y-3">
+            <div ref={listRef} className="space-y-3">
               {cases.map((c) => {
                 const isSelected = selectedCase?.id === c.id;
                 const isFraud = c.gst_status === 'FRAUD_FLAGGED';
@@ -79,7 +126,7 @@ export const CaseInspectorView: React.FC<CaseInspectorViewProps> = ({
                   <div
                     key={c.id}
                     onClick={() => onSelectCase(c)}
-                    className={`p-4 rounded border cursor-pointer transition-all ${
+                    className={`case-card-item p-4 rounded border cursor-pointer transition-all ${
                       isSelected
                         ? 'border-[#d9a15c] bg-[#1c1a17]'
                         : 'border-[rgba(237,227,208,0.1)] bg-[#141312] hover:border-[rgba(217,161,92,0.3)]'
@@ -120,7 +167,7 @@ export const CaseInspectorView: React.FC<CaseInspectorViewProps> = ({
         {/* Right Column (Deep-Dive Workspace): 8 cols */}
         <div className="lg:col-span-8">
           {selectedCase ? (
-            <div className="space-y-6">
+            <div ref={detailRef} className="space-y-6">
               {/* Top Determination Card */}
               <div
                 className={`stitch-card p-6 border ${
