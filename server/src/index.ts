@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import apiRouter from './routes/api';
 import { AppError } from './utils/errors';
 import { requestLogger } from './middleware/requestLogger';
+import { swaggerUi, swaggerSpec } from './config/swagger';
 
 dotenv.config();
 
@@ -15,6 +16,11 @@ app.use(express.json());
 app.use(requestLogger);
 
 app.use('/api/v1', apiRouter);
+app.get('/api-docs/swagger.json', (_req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
