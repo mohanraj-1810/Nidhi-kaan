@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import apiRouter from './routes/api';
 import { AppError } from './utils/errors';
+import { requestLogger } from './middleware/requestLogger';
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
+app.use(requestLogger);
 
 app.use('/api/v1', apiRouter);
 
