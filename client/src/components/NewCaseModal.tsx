@@ -92,47 +92,47 @@ export const NewCaseModal: React.FC<NewCaseModalProps> = ({
   return (
     <div ref={containerRef} className="max-w-3xl mx-auto space-y-6">
       {/* Header */}
-      <div className="border-b border-[rgba(237,227,208,0.1)] pb-5 flex items-start justify-between">
+      <div className="border-b border-[var(--border-subtle)] pb-5 flex items-start justify-between">
         <div>
-          <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest mb-1 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#d9a15c] animate-ping" />
+          <div className="text-[11px] font-mono text-[var(--accent-mint)] uppercase tracking-widest mb-1 flex items-center gap-2 font-bold">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#8BF497] animate-ping" />
             CASE INTAKE &amp; AI VERIFICATION
           </div>
-          <h1 className="text-3xl font-editorial font-light text-[#ede3d0]">
+          <h1 className="text-3xl font-editorial font-light text-[var(--text-primary)]">
             Register Milestone Submission
           </h1>
-          <p className="text-xs text-[#a8a29b] mt-1">
+          <p className="text-xs text-[var(--text-muted)] mt-1">
             Submits field evidence to the backend API (`/api/v1/cases/submit`). Runs System 1 (Geo), System 2 (Stage), and System 3 (GST) synchronously.
           </p>
         </div>
-        <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded border border-[#d9a15c]/25 bg-[#171512]">
+        <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded border border-[#8BF497]/35 bg-[var(--bg-card)] shadow-sm">
           <img
             src="/lady-justice-avatar.jpg"
             alt="Lady Justice Seal"
-            className="w-8 h-8 rounded-full object-cover border border-[#d9a15c]/50"
+            className="w-8 h-8 rounded-full object-cover border border-[#8BF497]/60"
           />
-          <div className="text-[10px] font-mono text-[#d9a15c] leading-tight">
-            <div className="font-semibold tracking-wider">LEGAL PORTAL</div>
-            <div className="text-[#a8a29b] text-[9px]">JUSTICE ACCORD</div>
+          <div className="text-[10px] font-mono text-[var(--accent-mint)] leading-tight">
+            <div className="font-bold tracking-wider">LEGAL PORTAL</div>
+            <div className="text-[var(--text-muted)] text-[9px]">JUSTICE ACCORD</div>
           </div>
         </div>
       </div>
 
       {/* Preset Quick-Buttons */}
-      <div className="stitch-card p-4 flex items-center justify-between gap-4">
-        <span className="text-xs font-mono text-[#a8a29b] uppercase">Quick Test Scenarios:</span>
+      <div className="stitch-card p-4 flex items-center justify-between gap-4 flex-wrap">
+        <span className="text-xs font-mono text-[var(--text-muted)] uppercase">Quick Test Scenarios:</span>
         <div className="flex gap-3">
           <button
             type="button"
             onClick={presetTirupurBusStand}
-            className="px-3 py-1.5 rounded border border-[#d9a15c]/40 text-[#d9a15c] text-xs font-mono hover:bg-[#d9a15c]/10"
+            className="px-3 py-1.5 rounded border border-[#8BF497]/50 text-[var(--accent-mint)] text-xs font-mono bg-[var(--bg-subtle)] hover:bg-[#8BF497]/15 transition-all cursor-pointer font-medium"
           >
             Tirupur Bus Stand (Valid)
           </button>
           <button
             type="button"
             onClick={presetFraudSim}
-            className="px-3 py-1.5 rounded border border-[#c84b31]/40 text-[#f87171] text-xs font-mono hover:bg-[#c84b31]/10"
+            className="px-3 py-1.5 rounded border border-[#f87171]/50 text-[#f87171] text-xs font-mono bg-[var(--bg-subtle)] hover:bg-[#f87171]/15 transition-all cursor-pointer font-medium"
           >
             GST Fraud Trigger (INV-FAKE)
           </button>
@@ -144,13 +144,13 @@ export const NewCaseModal: React.FC<NewCaseModalProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* Project Type */}
           <div>
-            <label className="block text-xs font-mono uppercase text-[#a8a29b] mb-2">
+            <label className="block text-xs font-mono uppercase text-[var(--text-muted)] mb-2">
               Scheme Category
             </label>
             <select
               value={projectType}
               onChange={(e) => setProjectType(e.target.value as ProjectType)}
-              className="w-full bg-[#0f0e0d] border border-[rgba(237,227,208,0.2)] rounded px-3 py-2.5 text-xs text-[#ede3d0] focus:border-[#d9a15c] outline-none"
+              className="w-full bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded px-3 py-2.5 text-xs text-[var(--text-primary)] focus:border-[#8BF497] outline-none transition-colors"
             >
               <option value="Bus Stand">Bus Stand / Infrastructure (MAWS)</option>
               <option value="Road">Road Maintenance &amp; Repair</option>
@@ -160,7 +160,7 @@ export const NewCaseModal: React.FC<NewCaseModalProps> = ({
 
           {/* Contractor ID */}
           <div>
-            <label className="block text-xs font-mono uppercase text-[#a8a29b] mb-2">
+            <label className="block text-xs font-mono uppercase text-[var(--text-muted)] mb-2">
               Beneficiary / Contractor ID
             </label>
             <input
@@ -168,19 +168,19 @@ export const NewCaseModal: React.FC<NewCaseModalProps> = ({
               required
               value={contractorId}
               onChange={(e) => setContractorId(e.target.value)}
-              className="w-full bg-[#0f0e0d] border border-[rgba(237,227,208,0.2)] rounded px-3 py-2.5 text-xs text-[#ede3d0] font-mono focus:border-[#d9a15c] outline-none"
+              className="w-full bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded px-3 py-2.5 text-xs text-[var(--text-primary)] font-mono focus:border-[#8BF497] outline-none transition-colors"
             />
           </div>
 
           {/* Claimed Stage */}
           <div>
-            <label className="block text-xs font-mono uppercase text-[#a8a29b] mb-2">
+            <label className="block text-xs font-mono uppercase text-[var(--text-muted)] mb-2">
               Claimed Structural Stage
             </label>
             <select
               value={stage}
               onChange={(e) => setStage(e.target.value)}
-              className="w-full bg-[#0f0e0d] border border-[rgba(237,227,208,0.2)] rounded px-3 py-2.5 text-xs text-[#ede3d0] focus:border-[#d9a15c] outline-none"
+              className="w-full bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded px-3 py-2.5 text-xs text-[var(--text-primary)] focus:border-[#8BF497] outline-none transition-colors"
             >
               <option value="Foundation">Foundation (Stage 1)</option>
               <option value="Plinth">Plinth / Walls (Stage 2)</option>
@@ -193,7 +193,7 @@ export const NewCaseModal: React.FC<NewCaseModalProps> = ({
 
           {/* Invoice Number */}
           <div>
-            <label className="block text-xs font-mono uppercase text-[#a8a29b] mb-2">
+            <label className="block text-xs font-mono uppercase text-[var(--text-muted)] mb-2">
               Procurement GST Invoice #
             </label>
             <input
@@ -201,14 +201,14 @@ export const NewCaseModal: React.FC<NewCaseModalProps> = ({
               value={invoiceNumber}
               onChange={(e) => setInvoiceNumber(e.target.value)}
               placeholder="e.g., INV-2026-TN-08842 (use 'FAKE' for fraud)"
-              className="w-full bg-[#0f0e0d] border border-[rgba(237,227,208,0.2)] rounded px-3 py-2.5 text-xs text-[#ede3d0] font-mono focus:border-[#d9a15c] outline-none"
+              className="w-full bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded px-3 py-2.5 text-xs text-[var(--text-primary)] font-mono focus:border-[#8BF497] outline-none transition-colors"
             />
           </div>
 
           {/* Latitude */}
           <div>
-            <label className="block text-xs font-mono uppercase text-[#a8a29b] mb-2 flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5 text-[#d9a15c]" />
+            <label className="block text-xs font-mono uppercase text-[var(--text-muted)] mb-2 flex items-center gap-1">
+              <MapPin className="w-3.5 h-3.5 text-[var(--accent-mint)]" />
               Latitude (0,0 fails System 1)
             </label>
             <input
@@ -217,14 +217,14 @@ export const NewCaseModal: React.FC<NewCaseModalProps> = ({
               required
               value={latitude}
               onChange={(e) => setLatitude(Number(e.target.value))}
-              className="w-full bg-[#0f0e0d] border border-[rgba(237,227,208,0.2)] rounded px-3 py-2.5 text-xs text-[#ede3d0] font-mono focus:border-[#d9a15c] outline-none"
+              className="w-full bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded px-3 py-2.5 text-xs text-[var(--text-primary)] font-mono focus:border-[#8BF497] outline-none transition-colors"
             />
           </div>
 
           {/* Longitude */}
           <div>
-            <label className="block text-xs font-mono uppercase text-[#a8a29b] mb-2 flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5 text-[#d9a15c]" />
+            <label className="block text-xs font-mono uppercase text-[var(--text-muted)] mb-2 flex items-center gap-1">
+              <MapPin className="w-3.5 h-3.5 text-[var(--accent-mint)]" />
               Longitude
             </label>
             <input
@@ -233,7 +233,7 @@ export const NewCaseModal: React.FC<NewCaseModalProps> = ({
               required
               value={longitude}
               onChange={(e) => setLongitude(Number(e.target.value))}
-              className="w-full bg-[#0f0e0d] border border-[rgba(237,227,208,0.2)] rounded px-3 py-2.5 text-xs text-[#ede3d0] font-mono focus:border-[#d9a15c] outline-none"
+              className="w-full bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded px-3 py-2.5 text-xs text-[var(--text-primary)] font-mono focus:border-[#8BF497] outline-none transition-colors"
             />
           </div>
         </div>
@@ -241,22 +241,23 @@ export const NewCaseModal: React.FC<NewCaseModalProps> = ({
         {/* Status Message */}
         {statusMsg && (
           <div
+            ref={statusRef}
             className={`p-3 rounded text-xs font-mono ${
               statusMsg.includes('Error')
-                ? 'bg-[#c84b31]/20 text-[#f87171] border border-[#c84b31]/40'
-                : 'bg-[#5c8a5c]/20 text-[#78be78] border border-[#5c8a5c]/40'
+                ? 'bg-[#f87171]/15 text-[#f87171] border border-[#f87171]/40'
+                : 'bg-[#8BF497]/20 text-[var(--accent-mint)] border border-[#8BF497]/50 font-semibold'
             }`}
           >
             {statusMsg}
           </div>
         )}
 
-        {/* Submit */}
-        <div className="pt-4 border-t border-[rgba(237,227,208,0.1)] flex justify-end gap-3">
+        {/* Submit Button */}
+        <div className="pt-4 border-t border-[var(--border-subtle)] flex justify-end gap-3">
           <button
             type="submit"
             disabled={loading}
-            className="px-8 py-3 bg-[#d9a15c] text-[#0f0e0d] font-bold text-xs uppercase tracking-wider rounded hover:bg-[#c48e4b] transition-colors disabled:opacity-50 flex items-center gap-2 shadow-lg"
+            className="px-8 py-3 bg-[#8BF497] text-[#000000] font-bold text-xs uppercase tracking-wider rounded hover:bg-[#78e385] transition-all disabled:opacity-50 flex items-center gap-2 shadow-lg cursor-pointer"
           >
             <Send className="w-4 h-4" />
             <span>{loading ? 'Submitting to AI Pipeline...' : 'Submit Evidence Dossier'}</span>

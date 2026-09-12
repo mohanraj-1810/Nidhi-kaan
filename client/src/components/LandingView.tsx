@@ -14,7 +14,7 @@ interface LandingViewProps {
   onOpenSubmit: () => void;
 }
 
-// Reusable progress row animated with anime.js
+// Reusable progress row animated with anime.js using Mint & Ice palette
 const ProgressRow: React.FC<{ label: string; pct: number; delay?: number }> = ({
   label,
   pct,
@@ -24,14 +24,14 @@ const ProgressRow: React.FC<{ label: string; pct: number; delay?: number }> = ({
 
   return (
     <div>
-      <div className="flex justify-between text-xs text-[#ede3d0] mb-1 font-mono">
-        <span className="text-[#a8a29b]">{label}</span>
-        <span className="font-semibold">{pct}%</span>
+      <div className="flex justify-between text-xs text-[var(--text-primary)] mb-1 font-mono">
+        <span className="text-[var(--text-muted)]">{label}</span>
+        <span className="font-semibold text-[var(--text-primary)]">{pct}%</span>
       </div>
-      <div className="w-full bg-[#0f0e0d] h-1.5 rounded overflow-hidden">
+      <div className="w-full bg-[var(--bg-subtle)] h-1.5 rounded overflow-hidden border border-[var(--border-subtle)]/40">
         <div
           ref={barRef}
-          className="bg-gradient-to-r from-[#d9a15c] to-[#f5c78e] h-full rounded"
+          className="bg-gradient-to-r from-[#8BF497] to-[#C1E4F9] h-full rounded"
           style={{ width: '0%' }}
         />
       </div>
@@ -116,7 +116,7 @@ export const LandingView: React.FC<LandingViewProps> = ({
     if (!glowEl) return;
     anime({
       targets: glowEl,
-      opacity: [0.15, 0.45],
+      opacity: [0.2, 0.5],
       scale: [1, 1.08],
       duration: 2800,
       direction: 'alternate',
@@ -143,28 +143,28 @@ export const LandingView: React.FC<LandingViewProps> = ({
     {
       system: '01',
       title: 'Authenticity AI',
-      icon: <Shield className="w-5 h-5 text-[#d9a15c]" />,
+      icon: <Shield className="w-5 h-5 text-[var(--accent-mint)]" />,
       desc: 'Gatekeeper rejecting synthetic photos, spoofed GPS coordinates, and duplicate images via pHash and ELA.',
       tag: 'Forced In-App Camera • Live EXIF',
     },
     {
       system: '02',
       title: 'Progress CV Engine',
-      icon: <Eye className="w-5 h-5 text-[#d9a15c]" />,
+      icon: <Eye className="w-5 h-5 text-[var(--accent-mint)]" />,
       desc: 'Fine-tuned EfficientNet-B4 classifying civil stages (Foundation→Plinth→Roof→Finishing) against tender DPR.',
       tag: 'Delta Progress • Multi-Temporal',
     },
     {
       system: '03',
       title: 'GST Cross-Checker',
-      icon: <FileCheck className="w-5 h-5 text-[#d9a15c]" />,
+      icon: <FileCheck className="w-5 h-5 text-[var(--accent-mint)]" />,
       desc: 'Automated NIC GSTR-2B API reconciliation flagging circular invoicing, shell entities, and mismatching volumes.',
       tag: 'NIC / IRIS API • GSTR-2B & GSTR-1',
     },
     {
       system: '04',
       title: 'Autonomous Escalation',
-      icon: <Send className="w-5 h-5 text-[#d9a15c]" />,
+      icon: <Send className="w-5 h-5 text-[var(--accent-mint)]" />,
       desc: 'Time-decaying state machine routing unresolved cases through Local Staff → District Collector → State Level → CM Dashboard.',
       tag: 'Fixed SLA Clock • Zero Human Stalling',
     },
@@ -198,8 +198,8 @@ export const LandingView: React.FC<LandingViewProps> = ({
           {/* Left Column */}
           <div ref={heroLeftRef} className="lg:col-span-7 flex flex-col items-start">
             {/* Badge */}
-            <div className="hero-anim opacity-0 inline-flex items-center gap-2 px-3.5 py-1 text-xs border border-[rgba(237,227,208,0.15)] text-[#a8a29b] mb-6 bg-[#171512] rounded-full uppercase tracking-wider font-mono">
-              <span className="w-2 h-2 rounded-full bg-[#d9a15c] animate-ping" />
+            <div className="hero-anim opacity-0 inline-flex items-center gap-2 px-3.5 py-1 text-xs border border-[var(--border-subtle)] text-[var(--text-muted)] mb-6 bg-[var(--bg-card)] rounded-full uppercase tracking-wider font-mono shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#8BF497] animate-ping" />
               <span>Government of Tamil Nadu • Constitutional Compliance 2026</span>
             </div>
 
@@ -212,35 +212,34 @@ export const LandingView: React.FC<LandingViewProps> = ({
                 {/* Radial glow behind */}
                 <div
                   id="lady-glow"
-                  className="absolute -inset-4 rounded-full bg-[#d9a15c]/20 blur-xl pointer-events-none"
+                  className="absolute -inset-4 rounded-full bg-[#8BF497]/20 blur-xl pointer-events-none"
                 />
-                <div className="relative w-24 h-24 rounded-full border-2 border-[#d9a15c]/60 overflow-hidden shadow-2xl bg-[#171512]">
+                <div className="relative w-24 h-24 rounded-full border-2 border-[#8BF497] overflow-hidden shadow-2xl bg-[var(--bg-card)]">
                   <img
                     src="/lady-justice-avatar.jpg"
                     alt="Lady of Justice — Nidhi Kaan Logo"
                     className="w-full h-full object-cover"
-                    style={{ filter: 'contrast(1.12) brightness(1.05)' }}
+                    style={{ filter: 'contrast(1.15) brightness(1.05)' }}
                   />
-                  {/* Inner gold vignette */}
-                  <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-[#d9a15c]/40" />
+                  <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-[#8BF497]/40" />
                 </div>
               </div>
 
               <div>
-                <h1 className="hero-anim opacity-0 text-6xl sm:text-7xl font-bold font-tamil text-[#ede3d0] leading-tight tracking-tight">
+                <h1 className="hero-anim opacity-0 text-6xl sm:text-7xl font-bold font-tamil text-[var(--text-primary)] leading-tight tracking-tight">
                   நிதி கண்
                 </h1>
-                <div className="hero-anim opacity-0 text-2xl font-medium text-[#d9a15c] tracking-wide mt-1 font-editorial italic">
+                <div className="hero-anim opacity-0 text-2xl font-medium text-[var(--accent-mint)] tracking-wide mt-1 font-editorial italic">
                   Nidhi Kaan — The Fund's Eye
                 </div>
               </div>
             </div>
 
-            <div className="hero-anim opacity-0 text-sm text-[#a8a29b] tracking-widest uppercase font-mono mb-6">
+            <div className="hero-anim opacity-0 text-sm text-[var(--text-muted)] tracking-widest uppercase font-mono mb-6">
               AI-BASED GOVERNMENT FUND UTILIZATION &amp; COMPLIANCE SYSTEM
             </div>
 
-            <p className="hero-anim opacity-0 text-lg sm:text-xl text-[#ede3d0]/85 font-light leading-relaxed mb-8 max-w-xl">
+            <p className="hero-anim opacity-0 text-lg sm:text-xl text-[var(--text-secondary)] font-light leading-relaxed mb-8 max-w-xl">
               Before public money moves, Nidhi Kaan verifies the ground evidence.
               Replacing slow manual inspection with geo-locked photo checks, CV stage
               progress, GST bill cross-checks, and auto-escalation to the CM's desk.
@@ -249,14 +248,14 @@ export const LandingView: React.FC<LandingViewProps> = ({
             <div className="hero-anim opacity-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
               <button
                 onClick={onOpenSubmit}
-                className="bg-[#d9a15c] text-[#0f0e0d] font-bold px-7 py-3.5 rounded hover:bg-[#c48e4b] active:scale-95 transition-all text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 group"
+                className="bg-[#8BF497] text-[#000000] font-bold px-7 py-3.5 rounded hover:bg-[#76e683] active:scale-95 transition-all text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 group cursor-pointer"
               >
                 <span>Submit Evidence Dossier</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
               <button
                 onClick={onExploreCases}
-                className="border border-[rgba(237,227,208,0.2)] text-[#ede3d0] px-7 py-3.5 rounded hover:border-[#d9a15c] hover:text-[#d9a15c] active:scale-95 transition-all text-xs uppercase tracking-wider flex items-center justify-center"
+                className="border border-[var(--border-subtle)] bg-[var(--bg-card)] text-[var(--text-primary)] px-7 py-3.5 rounded hover:border-[#8BF497] hover:text-[var(--accent-mint)] active:scale-95 transition-all text-xs uppercase tracking-wider flex items-center justify-center cursor-pointer shadow-sm"
               >
                 Inspect Live Cases
               </button>
@@ -268,24 +267,24 @@ export const LandingView: React.FC<LandingViewProps> = ({
             ref={heroRightRef}
             className="lg:col-span-5 flex flex-col items-center justify-center opacity-0 relative"
           >
-            {/* Ambient gold glow behind Lady of Justice */}
-            <div className="absolute -inset-8 rounded-full bg-gradient-to-tr from-[#d9a15c]/20 via-[#c48e4b]/10 to-transparent blur-3xl pointer-events-none" />
+            {/* Ambient Mint / Ice glow behind Lady of Justice */}
+            <div className="absolute -inset-8 rounded-full bg-gradient-to-tr from-[#8BF497]/25 via-[#C1E4F9]/20 to-transparent blur-3xl pointer-events-none" />
 
             {/* Indian Lady of Justice Hero Figure */}
             <div
               ref={figureRef}
               className="relative z-10 w-full max-w-[320px] flex justify-center mb-[-48px]"
             >
-              <div className="relative rounded-2xl overflow-hidden border border-[#d9a15c]/35 shadow-2xl bg-gradient-to-b from-[#171512] via-[#121110] to-[#0f0e0d]">
+              <div className="relative rounded-2xl overflow-hidden border border-[#8BF497]/40 shadow-2xl bg-[var(--bg-card)]">
                 <img
                   src="/lady-justice.jpg"
                   alt="Nyaya Devata — Indian Lady of Justice with Constitution of India"
                   className="w-full max-h-[400px] object-cover object-top hover:scale-105 transition-transform duration-700"
                   style={{ filter: 'contrast(1.12) brightness(1.05)' }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0f0e0d] via-transparent to-transparent opacity-85 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-card)] via-transparent to-transparent opacity-85 pointer-events-none" />
                 {/* Floating caption badge */}
-                <div className="absolute top-3 right-3 px-2.5 py-1 rounded bg-[#0f0e0d]/90 border border-[#d9a15c]/40 text-[9px] font-mono text-[#d9a15c] backdrop-blur-sm">
+                <div className="absolute top-3 right-3 px-2.5 py-1 rounded bg-[var(--bg-card)]/90 border border-[#8BF497]/50 text-[9px] font-mono text-[var(--accent-mint)] backdrop-blur-sm shadow-sm font-bold">
                   ⚖ CONSTITUTION OF INDIA
                 </div>
               </div>
@@ -293,53 +292,53 @@ export const LandingView: React.FC<LandingViewProps> = ({
 
             {/* Evidence Score Card Overlaid */}
             <div
-              className="relative z-20 w-full max-w-md stitch-card p-6 border-[#d9a15c]/35 backdrop-blur-md bg-[#141312]/95"
-              style={{ boxShadow: '0 12px 40px -10px rgba(0,0,0,0.8), 0 0 30px -5px rgba(217,161,92,0.2)' }}
+              className="relative z-20 w-full max-w-md stitch-card p-6 border-[var(--border-subtle)] backdrop-blur-md bg-[var(--bg-card)]/95"
+              style={{ boxShadow: 'var(--card-shadow)' }}
             >
               {/* Card Header */}
-              <div className="flex items-center justify-between border-b border-[rgba(237,227,208,0.1)] pb-3 mb-3">
+              <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3 mb-3">
                 <div className="flex items-center gap-2">
                   <img
                     src="/lady-justice-avatar.jpg"
                     alt="logo"
-                    className="w-7 h-7 rounded-full object-cover border border-[#d9a15c]/50"
+                    className="w-7 h-7 rounded-full object-cover border border-[#8BF497]/60"
                   />
                   <div>
-                    <span className="text-xs font-mono font-bold uppercase text-[#ede3d0] block">
+                    <span className="text-xs font-mono font-bold uppercase text-[var(--text-primary)] block">
                       TN-EVI-2026-8841
                     </span>
-                    <span className="text-[9px] font-mono text-[#d9a15c]">
+                    <span className="text-[9px] font-mono text-[var(--accent-mint)] font-medium">
                       CONSTITUTIONAL COMPLIANCE PASS
                     </span>
                   </div>
                 </div>
                 <span className="stitch-badge-green px-2.5 py-0.5 rounded text-[10px] font-mono font-bold flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#78be78] animate-ping" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#8BF497] animate-ping" />
                   VERIFIED
                 </span>
               </div>
 
               {/* Score */}
               <div className="text-center py-2">
-                <div className="text-5xl font-mono font-bold text-[#ede3d0] tracking-tight">
+                <div className="text-5xl font-mono font-bold text-[var(--text-primary)] tracking-tight">
                   <span ref={scoreRef}>0</span>
-                  <span className="text-xl text-[#d9a15c]">%</span>
+                  <span className="text-xl text-[var(--accent-mint)]">%</span>
                 </div>
-                <div className="text-[10px] text-[#a8a29b] mt-0.5 font-mono uppercase tracking-wider">
+                <div className="text-[10px] text-[var(--text-muted)] mt-0.5 font-mono uppercase tracking-wider">
                   Composite Evidence Confidence Score
                 </div>
               </div>
 
               {/* Bars */}
-              <div className="space-y-2.5 mt-3 border-t border-[rgba(237,227,208,0.08)] pt-3">
+              <div className="space-y-2.5 mt-3 border-t border-[var(--border-subtle)] pt-3">
                 <ProgressRow label="Location Consistency (Live GPS EXIF)" pct={92} delay={700} />
                 <ProgressRow label="Image Forensics (ELA & pHash)" pct={85} delay={900} />
                 <ProgressRow label="GST Invoice Match (GSTR-2B)" pct={79} delay={1100} />
               </div>
 
-              <div className="mt-4 pt-2.5 border-t border-[rgba(237,227,208,0.08)] flex items-center justify-between text-[11px] text-[#a8a29b] font-mono">
+              <div className="mt-4 pt-2.5 border-t border-[var(--border-subtle)] flex items-center justify-between text-[11px] text-[var(--text-muted)] font-mono">
                 <span>Pilot: Tiruppur Bus Stand</span>
-                <span className="text-[#78be78]">✓ GSTR-2B Sealed</span>
+                <span className="text-[var(--accent-mint)] font-semibold">✓ GSTR-2B Sealed</span>
               </div>
             </div>
           </div>
@@ -348,11 +347,11 @@ export const LandingView: React.FC<LandingViewProps> = ({
 
       {/* ── 4 Core AI Pillars ────────────────────────────────── */}
       <section ref={pillarsRef} className="space-y-6">
-        <div className="border-b border-[rgba(237,227,208,0.1)] pb-4">
-          <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest">
+        <div className="border-b border-[var(--border-subtle)] pb-4">
+          <div className="text-[11px] font-mono text-[var(--accent-mint)] uppercase tracking-widest font-bold">
             FOUR-LAYER SYSTEM ARCHITECTURE
           </div>
-          <h2 className="text-2xl sm:text-3xl font-editorial font-light text-[#ede3d0] mt-1">
+          <h2 className="text-2xl sm:text-3xl font-editorial font-light text-[var(--text-primary)] mt-1">
             Independent AI Modules Feeding Autonomous Escalation
           </h2>
         </div>
@@ -362,18 +361,17 @@ export const LandingView: React.FC<LandingViewProps> = ({
             <div
               key={p.system}
               className="pillar-card opacity-0 stitch-card p-6 flex flex-col justify-between
-                         hover:border-[#d9a15c]/40 hover:-translate-y-1 transition-all duration-300
-                         hover:shadow-[0_0_24px_-4px_rgba(217,161,92,0.18)]"
+                         hover:border-[#8BF497] hover:-translate-y-1 transition-all duration-300"
             >
               <div>
-                <div className="text-[10px] font-mono text-[#d9a15c] uppercase mb-2">System {p.system}</div>
-                <h3 className="font-bold text-sm text-[#ede3d0] mb-2 flex items-center gap-1.5">
+                <div className="text-[10px] font-mono text-[var(--accent-mint)] uppercase mb-2 font-bold">System {p.system}</div>
+                <h3 className="font-bold text-sm text-[var(--text-primary)] mb-2 flex items-center gap-1.5">
                   {p.icon}
                   <span>{p.title}</span>
                 </h3>
-                <p className="text-xs text-[#a8a29b] leading-relaxed">{p.desc}</p>
+                <p className="text-xs text-[var(--text-muted)] leading-relaxed">{p.desc}</p>
               </div>
-              <div className="mt-4 pt-3 border-t border-[rgba(237,227,208,0.08)] text-[10px] text-[#a8a29b] font-mono">
+              <div className="mt-4 pt-3 border-t border-[var(--border-subtle)] text-[10px] text-[var(--text-muted)] font-mono">
                 {p.tag}
               </div>
             </div>
@@ -383,17 +381,17 @@ export const LandingView: React.FC<LandingViewProps> = ({
 
       {/* ── Use Cases ────────────────────────────────────────── */}
       <section ref={useCasesRef} className="stitch-card p-8">
-        <div className="border-b border-[rgba(237,227,208,0.1)] pb-4 mb-6 flex items-center gap-4">
+        <div className="border-b border-[var(--border-subtle)] pb-4 mb-6 flex items-center gap-4">
           <img
             src="/lady-justice-avatar.jpg"
             alt="Nidhi Kaan"
-            className="w-10 h-10 rounded-full object-cover border border-[#d9a15c]/40 flex-shrink-0"
+            className="w-10 h-10 rounded-full object-cover border border-[#8BF497]/50 flex-shrink-0"
           />
           <div>
-            <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest">
+            <div className="text-[11px] font-mono text-[var(--accent-mint)] uppercase tracking-widest font-bold">
               STATEWIDE SCHEME DEPLOYMENTS
             </div>
-            <h2 className="text-2xl font-editorial font-light text-[#ede3d0] mt-0.5">
+            <h2 className="text-2xl font-editorial font-light text-[var(--text-primary)] mt-0.5">
               Built Once — Applicable Across Every Tamil Nadu Department
             </h2>
           </div>
@@ -403,21 +401,21 @@ export const LandingView: React.FC<LandingViewProps> = ({
           {useCases.map((uc) => (
             <div
               key={uc.label}
-              className="use-case-card opacity-0 bg-[#141312] p-5 border border-[rgba(237,227,208,0.08)] rounded
-                         hover:border-[#d9a15c]/30 hover:-translate-y-1 transition-all duration-300"
+              className="use-case-card opacity-0 bg-[var(--bg-subtle)] p-5 border border-[var(--border-subtle)] rounded
+                         hover:border-[#8BF497] hover:-translate-y-1 transition-all duration-300"
             >
-              <span className="text-[#d9a15c] font-mono uppercase font-bold text-[10px] block mb-2">
+              <span className="text-[var(--accent-mint)] font-mono uppercase font-bold text-[10px] block mb-2">
                 {uc.label}
               </span>
-              <div className="font-bold text-sm text-[#ede3d0] mb-2">{uc.title}</div>
-              <p className="text-[#a8a29b] leading-relaxed">{uc.desc}</p>
+              <div className="font-bold text-sm text-[var(--text-primary)] mb-2">{uc.title}</div>
+              <p className="text-[var(--text-muted)] leading-relaxed">{uc.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ── Justice Quote Banner ─────────────────────────────── */}
-      <section className="relative overflow-hidden rounded-lg border border-[#d9a15c]/25 bg-[#141312] p-10 text-center">
+      <section className="relative overflow-hidden rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-10 text-center shadow-sm">
         {/* BG Lady Justice watermark */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.06]">
           <img
@@ -427,17 +425,17 @@ export const LandingView: React.FC<LandingViewProps> = ({
           />
         </div>
         <div className="relative z-10">
-          <div className="text-[11px] font-mono text-[#d9a15c] uppercase tracking-widest mb-4 flex items-center justify-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#d9a15c]" />
+          <div className="text-[11px] font-mono text-[var(--accent-mint)] uppercase tracking-widest mb-4 flex items-center justify-center gap-2 font-bold">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#8BF497]" />
             CONSTITUTIONAL FIDUCIARY PRINCIPLE
-            <span className="w-1.5 h-1.5 rounded-full bg-[#d9a15c]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#8BF497]" />
           </div>
-          <blockquote className="text-2xl sm:text-3xl font-editorial font-light text-[#ede3d0] italic leading-relaxed max-w-2xl mx-auto">
+          <blockquote className="text-2xl sm:text-3xl font-editorial font-light text-[var(--text-primary)] italic leading-relaxed max-w-2xl mx-auto">
             "Justice is not blind to the flow of public funds.
             <br />
             Under the Constitution of India, Nidhi Kaan makes every rupee accountable."
           </blockquote>
-          <div className="mt-4 text-xs text-[#a8a29b] font-mono">
+          <div className="mt-4 text-xs text-[var(--text-muted)] font-mono">
             — AI-BASED ANTI-CORRUPTION &amp; COMPLIANCE SYSTEM • GOVERNMENT OF TAMIL NADU • 2026
           </div>
         </div>

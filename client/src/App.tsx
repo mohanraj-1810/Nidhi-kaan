@@ -101,12 +101,29 @@ const seedCases: CaseItem[] = [
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'landing' | 'cases' | 'submit' | 'dashboard' | 'gst'>('landing');
   const [lang, setLang] = useState<'ta' | 'en'>('ta');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('nidhi_theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+    return 'dark';
+  });
   const [serverOnline, setServerOnline] = useState<boolean>(false);
   const [stats, setStats] = useState<DashboardStats>(initialMockStats);
   const [cases, setCases] = useState<CaseItem[]>(seedCases);
   const [selectedCase, setSelectedCase] = useState<CaseItem | null>(seedCases[0]);
   const [loading, setLoading] = useState<boolean>(false);
   const [actionLoading, setActionLoading] = useState<boolean>(false);
+
+  // Sync theme to <html> class
+  useEffect(() => {
+    localStorage.setItem('nidhi_theme', theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
 
   // Check backend health & fetch stats
   const fetchStats = async () => {
@@ -286,7 +303,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0f0e0d] text-[#ede3d0]">
+    <div className="min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)] transition-colors duration-250">
       {/* Navbar */}
       <Navbar
         activeTab={activeTab}
@@ -294,6 +311,8 @@ export const App: React.FC = () => {
         lang={lang}
         setLang={setLang}
         serverOnline={serverOnline}
+        theme={theme}
+        setTheme={setTheme}
       />
 
       {/* Main Content Area */}
@@ -338,16 +357,16 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[rgba(237,227,208,0.1)] bg-[#141312] text-xs py-8 text-[#a8a29b]">
+      <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-card)] text-xs py-8 text-[var(--text-muted)] transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center space-x-3">
-            <span className="font-tamil text-sm font-bold text-[#ede3d0]">நிதி கண்</span>
+            <span className="font-tamil text-sm font-bold text-[var(--text-primary)]">நிதி கண்</span>
             <span>•</span>
             <span>GIGW Compliant Prototype</span>
             <span>•</span>
             <span>Government of Tamil Nadu</span>
           </div>
-          <div className="font-mono text-[11px] text-[#d9a15c]">
+          <div className="font-mono text-[11px] text-[var(--accent-mint)] font-medium">
             Connected to Express API (/api/v1) &amp; Supabase PostgreSQL
           </div>
         </div>

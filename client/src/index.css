@@ -2,25 +2,63 @@
 
 @layer base {
   :root {
-    --bg-base: #0f0e0d;
-    --bg-elevated: #171512;
-    --bg-overlay: #1c1a17;
-    --gold: #d9a15c;
-    --gold-hover: #c48e4b;
-    --gold-light: #f7bb74;
-    --cream: #ede3d0;
-    --muted: #a8a29b;
-    --border-subtle: rgba(237, 227, 208, 0.1);
-    --border-active: rgba(217, 161, 92, 0.3);
-    --risk-high: #c84b31;
-    --risk-medium: #d9a15c;
-    --risk-low: #5c8a5c;
+    /* Exact Palette Swatches from User Image */
+    --swatch-mint: #8BF497;
+    --swatch-ice: #C1E4F9;
+    --swatch-white: #FFFFFF;
+    --swatch-black: #000000;
+    --swatch-gray: #AAAAAA;
+
+    /* Theme Tokens - Default Light */
+    --bg-page: #F5F9FA;
+    --bg-card: #FFFFFF;
+    --bg-elevated: #FFFFFF;
+    --bg-subtle: #EDF5F8;
+    --bg-overlay: #E4EFF4;
+    --text-primary: #000000;
+    --text-secondary: #2C3842;
+    --text-muted: #6B7B88;
+    --border-subtle: rgba(170, 170, 170, 0.35);
+    --border-ice: rgba(193, 228, 249, 0.9);
+    --border-mint: rgba(139, 244, 151, 0.9);
+    
+    --accent-mint: #0E7730; /* Accessible dark mint on white */
+    --accent-mint-bright: #8BF497;
+    --accent-ice: #0368A6; /* Accessible dark ice-blue on white */
+    --accent-ice-bright: #C1E4F9;
+    --header-bg: rgba(255, 255, 255, 0.92);
+
+    --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 0 1px 1px rgba(170, 170, 170, 0.2);
+  }
+
+  /* Dark Theme Tokens */
+  .dark {
+    --bg-page: #000000;
+    --bg-card: #0A0D0E;
+    --bg-elevated: #111518;
+    --bg-subtle: #161B1E;
+    --bg-overlay: #1D2327;
+    --text-primary: #FFFFFF;
+    --text-secondary: #C1E4F9;
+    --text-muted: #AAAAAA;
+    --border-subtle: rgba(170, 170, 170, 0.2);
+    --border-ice: rgba(193, 228, 249, 0.3);
+    --border-mint: rgba(139, 244, 151, 0.4);
+
+    --accent-mint: #8BF497;
+    --accent-mint-bright: #8BF497;
+    --accent-ice: #C1E4F9;
+    --accent-ice-bright: #C1E4F9;
+    --header-bg: rgba(0, 0, 0, 0.92);
+
+    --card-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(170, 170, 170, 0.15);
   }
 
   body {
-    background-color: var(--bg-base);
-    color: var(--cream);
+    background-color: var(--bg-page);
+    color: var(--text-primary);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   h1, h2, .font-editorial {
@@ -36,55 +74,72 @@
   }
 }
 
-/* Custom Stitch Utility Styles */
+/* Card Surfaces */
 .stitch-card {
-  background-color: #171512;
-  border: 1px solid rgba(237, 227, 208, 0.1);
-  border-radius: 0.5rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.625rem;
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.stitch-card-hover {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+.stitch-card:hover {
+  border-color: var(--accent-mint-bright);
 }
 
-.stitch-card-hover:hover {
-  border-color: rgba(217, 161, 92, 0.35);
-  transform: translateY(-2px);
+/* Badges based on User's 5-Color Pattern */
+.stitch-badge-mint {
+  background: rgba(139, 244, 151, 0.18);
+  border: 1px solid #8BF497;
+  color: var(--accent-mint);
 }
 
-.stitch-badge-gold {
-  background: rgba(217, 161, 92, 0.12);
-  border: 1px solid rgba(217, 161, 92, 0.3);
-  color: #d9a15c;
+.stitch-badge-ice {
+  background: rgba(193, 228, 249, 0.25);
+  border: 1px solid #C1E4F9;
+  color: var(--accent-ice);
 }
 
 .stitch-badge-green {
-  background: rgba(92, 138, 92, 0.15);
-  border: 1px solid rgba(92, 138, 92, 0.35);
-  color: #78be78;
+  background: rgba(139, 244, 151, 0.2);
+  border: 1px solid #8BF497;
+  color: var(--accent-mint);
+}
+
+.stitch-badge-gold {
+  background: rgba(193, 228, 249, 0.25);
+  border: 1px solid #C1E4F9;
+  color: var(--accent-ice);
 }
 
 .stitch-badge-red {
-  background: rgba(200, 75, 49, 0.15);
-  border: 1px solid rgba(200, 75, 49, 0.35);
+  background: rgba(248, 113, 113, 0.15);
+  border: 1px solid rgba(248, 113, 113, 0.5);
   color: #f87171;
 }
 
-.gold-glow {
-  box-shadow: 0 0 25px -5px rgba(217, 161, 92, 0.2);
+/* Glow Utilities */
+.mint-glow {
+  box-shadow: 0 0 30px -5px rgba(139, 244, 151, 0.35);
 }
 
+.ice-glow {
+  box-shadow: 0 0 30px -5px rgba(193, 228, 249, 0.35);
+}
+
+/* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #141312;
+  background: var(--bg-subtle);
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #2a2723;
+  background: var(--swatch-gray);
   border-radius: 3px;
+  opacity: 0.5;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #3e3a34;
+  background: var(--swatch-mint);
 }
