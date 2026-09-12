@@ -2,11 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import apiRouter from './routes/api';
+import { AppError } from './utils/errors';
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
@@ -19,8 +20,10 @@ app.get('/health', (_req, res) => {
 
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error('Error:', err.message);
-  const status = err.message.includes('not found') ? 404 : 500;
-  res.status(status).json({ error: err.message });
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({ error: err.message });
+  }
+  res.status(500).json({ error: 'Internal server error' });
 });
 
 app.listen(PORT, () => {

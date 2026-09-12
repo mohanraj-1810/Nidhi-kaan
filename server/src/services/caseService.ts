@@ -11,6 +11,7 @@ import {
   VerifyGSTResponse,
   FastForwardResponse,
 } from '../schemas';
+import { AppError } from '../utils/errors';
 
 const ESCALATION_ORDER: EscalationLevel[] = [
   'LOCAL_STAFF',
@@ -73,7 +74,7 @@ export const caseService = {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to create case: ${error.message}`);
+    if (error) throw new AppError(`Failed to create case: ${error.message}`);
     return inserted as CaseResponse;
   },
 
@@ -86,14 +87,14 @@ export const caseService = {
 
     if (error) {
       if (error.code === 'PGRST116') return null;
-      throw new Error(`Failed to fetch case: ${error.message}`);
+      throw new AppError(`Failed to fetch case: ${error.message}`);
     }
     return data as CaseResponse;
   },
 
   async verifyGST(id: string): Promise<VerifyGSTResponse> {
     const existingCase = await this.getCaseById(id);
-    if (!existingCase) throw new Error('Case not found');
+    if (!existingCase) throw new AppError('Case not found', 404);
 
     const gstStatus = checkGSTFraud(existingCase.invoice_number);
     const message = gstStatus === 'FRAUD_FLAGGED'
@@ -107,7 +108,7 @@ export const caseService = {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to update GST status: ${error.message}`);
+    if (error) throw new AppError(`Failed to update GST status: ${error.message}`);
 
     return {
       id: data.id,
@@ -119,7 +120,7 @@ export const caseService = {
 
   async fastForward(id: string, rejectionReason?: string): Promise<FastForwardResponse> {
     const existingCase = await this.getCaseById(id);
-    if (!existingCase) throw new Error('Case not found');
+    if (!existingCase) throw new AppError('Case not found', 404);
 
     const previousLevel = existingCase.escalation_level;
     const newLevel = getNextEscalationLevel(previousLevel);
@@ -142,7 +143,7 @@ export const caseService = {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to escalate case: ${error.message}`);
+    if (error) throw new AppError(`Failed to escalate case: ${error.message}`);
 
     return {
       id: data.id,
@@ -156,7 +157,7 @@ export const caseService = {
   async getDashboardStats(): Promise<DashboardStatsResponse> {
     const { data: cases, error } = await supabase.from('cases').select('*');
 
-    if (error) throw new Error(`Failed to fetch stats: ${error.message}`);
+    if (error) throw new AppError(`Failed to fetch stats: ${error.message}`);
 
     const totalCases = cases.length;
     const pendingInspections = cases.filter(
