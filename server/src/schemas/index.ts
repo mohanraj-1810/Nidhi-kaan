@@ -35,8 +35,8 @@ export const CaseResponseSchema = z.object({
   sla_timer_hours: z.number().int(),
   is_escalated: z.boolean(),
   rejection_reason: z.string().nullable(),
-  created_at: z.string().datetime(),
-  updated_at: z.string().datetime(),
+  created_at: z.string(),
+  updated_at: z.string(),
 });
 
 export const FastForwardRequestSchema = z.object({
@@ -63,7 +63,7 @@ export const FastForwardResponseSchema = z.object({
   previous_escalation_level: EscalationLevelEnum,
   new_escalation_level: EscalationLevelEnum,
   is_escalated: z.boolean(),
-  updated_at: z.string().datetime(),
+  updated_at: z.string(),
 });
 
 export type CaseCreate = z.infer<typeof CaseCreateSchema>;
