@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-base: #0f0e0d;
+    --bg-elevated: #171512;
+    --bg-overlay: #1c1a17;
+    --gold: #d9a15c;
+    --gold-hover: #c48e4b;
+    --gold-light: #f7bb74;
+    --cream: #ede3d0;
+    --muted: #a8a29b;
+    --border-subtle: rgba(237, 227, 208, 0.1);
+    --border-active: rgba(217, 161, 92, 0.3);
+    --risk-high: #c84b31;
+    --risk-medium: #d9a15c;
+    --risk-low: #5c8a5c;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--cream);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  h1, h2, .font-editorial {
+    font-family: 'Fraunces', Georgia, serif;
+  }
+
+  .font-mono, code, .data-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .font-tamil {
+    font-family: 'Noto Sans Tamil', 'Inter', sans-serif;
+  }
+}
+
+/* Custom Stitch Utility Styles */
+.stitch-card {
+  background-color: #171512;
+  border: 1px solid rgba(237, 227, 208, 0.1);
+  border-radius: 0.5rem;
+}
+
+.stitch-card-hover {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stitch-card-hover:hover {
+  border-color: rgba(217, 161, 92, 0.35);
+  transform: translateY(-2px);
+}
+
+.stitch-badge-gold {
+  background: rgba(217, 161, 92, 0.12);
+  border: 1px solid rgba(217, 161, 92, 0.3);
+  color: #d9a15c;
+}
+
+.stitch-badge-green {
+  background: rgba(92, 138, 92, 0.15);
+  border: 1px solid rgba(92, 138, 92, 0.35);
+  color: #78be78;
+}
+
+.stitch-badge-red {
+  background: rgba(200, 75, 49, 0.15);
+  border: 1px solid rgba(200, 75, 49, 0.35);
+  color: #f87171;
+}
+
+.gold-glow {
+  box-shadow: 0 0 25px -5px rgba(217, 161, 92, 0.2);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #141312;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #2a2723;
+  border-radius: 3px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #3e3a34;
+}

@@ -11,6 +11,39 @@ import {
 
 const router = Router();
 
+// GET /cases — list all cases
+router.get(
+  '/',
+  async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+      const cases = await caseService.getAllCases();
+      res.json(cases);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// GET /cases/:id — single case detail
+router.get(
+  '/:id',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const uuidParse = z.string().uuid().safeParse(req.params.id);
+      if (!uuidParse.success) {
+        return res.status(400).json({ error: 'Invalid case UUID' });
+      }
+      const found = await caseService.getCaseById(uuidParse.data);
+      if (!found) return res.status(404).json({ error: 'Case not found' });
+      const validated = CaseResponseSchema.parse(found);
+      res.json(validated);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+
 const validate = (schema: z.ZodSchema) => (req: Request, res: Response, next: NextFunction) => {
   const result = schema.safeParse(req.body);
   if (!result.success) {

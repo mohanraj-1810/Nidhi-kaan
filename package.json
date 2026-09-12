@@ -1,0 +1,22 @@
+{
+  "name": "nidhi-kaan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nidhi Kaan — AI-Based Government Fund Utilization & Anti-Corruption Compliance System",
+  "scripts": {
+    "dev": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "client": "npm --prefix client run dev",
+    "server": "npm --prefix server run dev",
+    "server:build": "npm --prefix server run build"
+  },
+  "keywords": [
+    "tamil-nadu",
+    "anti-corruption",
+    "ai-compliance",
+    "gst-verification",
+    "evidence-engine"
+  ],
+  "author": "Mohanraj",
+  "license": "MIT"
+}

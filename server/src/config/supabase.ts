@@ -3,12 +3,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SECRET_KEY!;
+const supabaseUrl = process.env.SUPABASE_URL || 'https://mock.supabase.co';
+const supabaseKey = process.env.SUPABASE_SECRET_KEY || 'mock-key';
 
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error('Missing Supabase credentials in environment variables');
-}
+export const isSupabaseConfigured = Boolean(
+  process.env.SUPABASE_URL && process.env.SUPABASE_SECRET_KEY
+);
 
 export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey, {
   auth: {
