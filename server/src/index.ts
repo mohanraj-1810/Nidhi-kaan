@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
 import apiRouter from './routes/api';
 import { AppError } from './utils/errors';
 import { requestLogger } from './middleware/requestLogger';
@@ -25,6 +27,26 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+// Serve the merged React frontend in production. `client/dist` is resolved
+// relative to this file, which works both from src/ (tsx dev) and dist/
+// (compiled output). API routes are already mounted above, so every non-API
+// GET falls back to the SPA's index.html.
+const clientDist = path.resolve(__dirname, '../../client/dist');
+if (fs.existsSync(clientDist)) {
+  app.use(express.static(clientDist));
+  app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (
+      req.method !== 'GET' ||
+      req.path.startsWith('/api/') ||
+      req.path.startsWith('/api-docs') ||
+      req.path === '/health'
+    ) {
+      return next();
+    }
+    res.sendFile(path.join(clientDist, 'index.html'));
+  });
+}
 
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error('Error:', err.message);
