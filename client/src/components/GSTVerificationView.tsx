@@ -1,21 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import anime from 'animejs';
 import {
-  FileSearch,
   CheckCircle,
   XCircle,
   AlertOctagon,
   RefreshCw,
-  Database,
-  Building,
-  ShieldAlert,
 } from 'lucide-react';
 import { api } from '../services/api';
 import { VerifyGSTResponse } from '../types';
 
 export const GSTVerificationView: React.FC = () => {
   const [caseId, setCaseId] = useState('');
-  const [invoiceNumber, setInvoiceNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<VerifyGSTResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -98,7 +93,7 @@ export const GSTVerificationView: React.FC = () => {
 
       {/* Lookup Form */}
       <form ref={formRef} onSubmit={handleVerify} className="stitch-card p-7 space-y-5">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 gap-5">
           <div>
             <label className="block text-xs font-mono uppercase text-[var(--text-muted)] mb-2">
               Target Case UUID (from database)
@@ -106,25 +101,17 @@ export const GSTVerificationView: React.FC = () => {
             <input
               type="text"
               required
-              placeholder="e.g., 550e8400-e29b-41d4-a716-446655440000"
+              placeholder="e.g., 550e8400-e29b-41d4-a716-446655440001"
               value={caseId}
               onChange={(e) => setCaseId(e.target.value.trim())}
               className="w-full bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded px-3 py-2.5 text-xs text-[var(--text-primary)] font-mono focus:border-[#8BF497] outline-none transition-colors"
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-mono uppercase text-[var(--text-muted)] mb-2">
-              Claimed Procurement Invoice #
-            </label>
-            <input
-              type="text"
-              value={invoiceNumber}
-              onChange={(e) => setInvoiceNumber(e.target.value)}
-              placeholder="e.g., INV-2026-TN-08842"
-              className="w-full bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded px-3 py-2.5 text-xs text-[var(--text-primary)] font-mono focus:border-[#8BF497] outline-none transition-colors"
-            />
-          </div>
+          <p className="text-[11px] text-[var(--text-muted)] font-mono -mt-2 -mb-2">
+            The backend re-verifies the <span className="text-[var(--text-primary)] font-semibold">stored invoice number</span> for the
+            selected dossier against GSTR-2B — no separate invoice input is sent to the API.
+          </p>
         </div>
 
         {error && (
