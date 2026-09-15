@@ -11,6 +11,8 @@ ehthumbs_vista.db
 
 # Node / Web Dependencies
 node_modules/
+bun.lock
+bun.lockb
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
