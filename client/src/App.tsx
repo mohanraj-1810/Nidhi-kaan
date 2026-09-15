@@ -168,7 +168,10 @@ export const App: React.FC = () => {
       setServerOnline(true);
       fetchStats();
     } catch (err) {
-      // Fallback local mock if backend offline
+      // Backend rejected the request (validation/conflict) — surface the real
+      // message so the New Case form can show it, instead of fabricating a case.
+      if ((err as { status?: number })?.status) throw err;
+      // Network failure (backend offline) — fall back to local mock
       const mockNew: CaseItem = {
         id: crypto.randomUUID(),
         project_type: payload.project_type,
@@ -222,7 +225,7 @@ export const App: React.FC = () => {
       }
       fetchStats();
     } catch {
-      // Fallback mock logic
+      // Network failure (backend offline) — keep a consistent local verdict
       setCases((prev) =>
         prev.map((c) => {
           if (c.id === id) {
@@ -275,7 +278,7 @@ export const App: React.FC = () => {
       }
       fetchStats();
     } catch {
-      // Fallback mock progression
+      // Network failure (backend offline) — fall back to local progression
       setCases((prev) =>
         prev.map((c) => {
           if (c.id === id) {
