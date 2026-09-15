@@ -8,21 +8,23 @@ import { GSTVerificationView } from './components/GSTVerificationView';
 import { api } from './services/api';
 import { CaseItem, DashboardStats, CaseCreatePayload } from './types';
 
-// Fallback initial stats if backend is starting up
+// Mirrors the backend's caseService memory-store derivation exactly so that the
+// UI shows identical data whether the Express API is online or the app is
+// running in mock/offline mode.
 const initialMockStats: DashboardStats = {
-  total_cases: 14,
-  pending_inspections: 3,
-  fraud_flagged_count: 2,
-  escalated_count: 5,
+  total_cases: 2,
+  pending_inspections: 0,
+  fraud_flagged_count: 1,
+  escalated_count: 1,
   cases_by_escalation_level: {
-    LOCAL_STAFF: 4,
-    DISTRICT: 4,
-    STATE: 3,
-    CM_DASHBOARD: 3,
+    LOCAL_STAFF: 1,
+    DISTRICT: 1,
+    STATE: 0,
+    CM_DASHBOARD: 0,
   },
 };
 
-// Initial seed cases for immediate visual exploration
+// Seed cases mirror the backend's caseService memory store exactly.
 const seedCases: CaseItem[] = [
   {
     id: '550e8400-e29b-41d4-a716-446655440001',
@@ -58,42 +60,6 @@ const seedCases: CaseItem[] = [
     is_escalated: true,
     rejection_reason: 'Recycled asphalt density below IRC standards; invoice number unverified on GSTN',
     created_at: new Date(Date.now() - 1000 * 60 * 60 * 36).toISOString(),
-    updated_at: new Date().toISOString(),
-  },
-  {
-    id: '550e8400-e29b-41d4-a716-446655440003',
-    project_type: 'Housing',
-    beneficiary_contractor_id: 'BEN-KKI-DMR-882',
-    claimed_stage: 'Plinth',
-    latitude: 11.121,
-    longitude: 77.329,
-    authenticity_status: 'PASSED',
-    progress_status: 'APPROVED',
-    invoice_number: 'INV-CEMENT-3381',
-    gst_status: 'VALID',
-    escalation_level: 'STATE',
-    sla_timer_hours: 6,
-    is_escalated: true,
-    rejection_reason: null,
-    created_at: new Date(Date.now() - 1000 * 60 * 60 * 68).toISOString(),
-    updated_at: new Date().toISOString(),
-  },
-  {
-    id: '550e8400-e29b-41d4-a716-446655440004',
-    project_type: 'Bus Stand',
-    beneficiary_contractor_id: 'TN-INFRA-CORP-91',
-    claimed_stage: 'Foundation',
-    latitude: 0,
-    longitude: 0,
-    authenticity_status: 'FAILED',
-    progress_status: 'PENDING',
-    invoice_number: null,
-    gst_status: 'PENDING',
-    escalation_level: 'CM_DASHBOARD',
-    sla_timer_hours: 0,
-    is_escalated: true,
-    rejection_reason: 'EXIF coordinates 0,0 detected (GPS tampering / gallery upload spoof)',
-    created_at: new Date(Date.now() - 1000 * 60 * 60 * 96).toISOString(),
     updated_at: new Date().toISOString(),
   },
 ];
